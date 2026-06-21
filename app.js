@@ -13,18 +13,20 @@ app.set("views", path.join(__dirname, "views"));
 
 io.on("connection", (socket) => {
   socket.on("send-location", (data) => {
-    io.emit("receive-location", { id: socket.id, ...data });
+    io.emit("receive-location", {
+      id: socket.id,
+      ...data,
+    });
   });
+
   socket.on("disconnect", () => {
     io.emit("user-disconnected", socket.id);
   });
-  console.log("connected");
 });
-
 app.get("/", (req, res) => {
   res.render("index");
 });
 
-server.listen(3000, (req, res) => {
+server.listen(3000, () => {
   console.log("Server is listening at port 3000");
 });
